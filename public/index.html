@@ -1,0 +1,52 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BrightSmile Dental — AI Assistant Demo</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,sans-serif;color:#0f2b3d;background:#f4f9fb}
+.top{display:flex;justify-content:space-between;align-items:center;padding:22px 64px;background:#fff;border-bottom:1px solid #e3eef3}
+.logo{font-weight:800;font-size:22px;color:#0b7a8f}.logo span{color:#0f2b3d}.nav a{margin-left:28px;color:#335;text-decoration:none;font-size:15px}
+.badge{position:fixed;top:0;left:50%;transform:translateX(-50%);background:#ffb703;color:#222;font-size:12px;padding:4px 12px;border-radius:0 0 8px 8px;font-weight:600;z-index:9}
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;padding:80px 64px;align-items:center}
+.hero h1{font-size:52px;line-height:1.05;margin:0 0 18px}.hero p{font-size:19px;color:#456;max-width:520px}
+.cta{display:inline-block;margin-top:18px;background:#0b7a8f;color:#fff;padding:14px 26px;border-radius:10px;font-weight:600;text-decoration:none}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}.card{background:#fff;border-radius:14px;padding:22px;box-shadow:0 4px 20px #0b7a8f14}
+.card b{display:block;font-size:17px;margin-bottom:6px}.card small{color:#678}
+#cw-btn{position:fixed;right:28px;bottom:28px;width:64px;height:64px;border-radius:50%;background:#0b7a8f;color:#fff;border:0;font-size:28px;cursor:pointer;box-shadow:0 8px 24px #0b7a8f55}
+#cw{position:fixed;right:28px;bottom:104px;width:390px;height:560px;background:#fff;border-radius:18px;box-shadow:0 20px 60px #0003;display:none;flex-direction:column;overflow:hidden}
+#cw.open{display:flex}.cw-h{background:linear-gradient(135deg,#0b7a8f,#12a4b8);color:#fff;padding:16px 18px}.cw-h b{font-size:16px}.cw-h small{display:block;opacity:.85}
+#cw-log{flex:1;overflow:auto;padding:14px;background:#f7fbfc}.m{max-width:82%;padding:10px 13px;border-radius:14px;margin:6px 0;font-size:14px;line-height:1.4}
+.bot{background:#fff;border:1px solid #e1edf1}.me{background:#0b7a8f;color:#fff;margin-left:auto}
+.lead{background:#fff;border:1px solid #cfe6ec;border-radius:14px;padding:12px;margin:8px 0}.lead input{width:100%;margin:4px 0;padding:9px;border:1px solid #cdd;border-radius:8px;font:inherit;font-size:14px}
+.lead button,.cw-f button{background:#0b7a8f;color:#fff;border:0;border-radius:8px;padding:9px 14px;font-weight:600;cursor:pointer}
+.cw-f{display:flex;gap:8px;padding:10px;border-top:1px solid #e6eef1}.cw-f input{flex:1;padding:10px;border:1px solid #cdd;border-radius:8px;font:inherit}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.chips button{background:#e7f5f8;border:1px solid #bfe3ea;color:#0b7a8f;border-radius:20px;padding:5px 10px;font-size:12px;cursor:pointer}
+</style></head><body>
+<div class="badge">DEMO PROJECT · fictional business · built by Shipfast Labs</div>
+<div class="top"><div class="logo">Bright<span>Smile</span> Dental</div><div class="nav"><a>Services</a><a>Pricing</a><a>Insurance</a><a>Contact</a></div></div>
+<section class="hero"><div><h1>Gentle dental care, open late on weekdays.</h1><p>Check-ups, cleaning, whitening and same-day emergency slots. Questions at 11pm? Our AI assistant answers instantly and books you in.</p><a class="cta" onclick="toggle(true)">Ask the assistant</a></div>
+<div class="cards"><div class="card"><b>Check-up + X-rays</b><small>$89 · 40 min</small></div><div class="card"><b>Professional cleaning</b><small>$110 · 45 min</small></div><div class="card"><b>In-office whitening</b><small>$349 · 75 min</small></div><div class="card"><b>Emergency visit</b><small>Same-day slots</small></div></div></section>
+<button id="cw-btn" onclick="toggle()">💬</button>
+<div id="cw"><div class="cw-h"><b>BrightSmile Assistant</b><small id="cw-mode">Answers from the clinic's FAQ · usually instant</small></div>
+<div id="cw-log"></div><form class="cw-f" onsubmit="send(event)"><input id="cw-in" placeholder="Ask about prices, hours, insurance…" autocomplete="off"><button>Send</button></form></div>
+<script>
+const log=document.getElementById('cw-log');let FAQ=null,leadShown=false;
+fetch('faq.json').then(r=>r.json()).then(j=>FAQ=j);
+function toggle(o){const w=document.getElementById('cw');w.classList.toggle('open',o??!w.classList.contains('open'));if(!log.children.length)greet();}
+function add(t,c){const d=document.createElement('div');d.className='m '+c;d.textContent=t;log.appendChild(d);log.scrollTop=1e9;return d;}
+function greet(){add("Hi! 👋 I'm the BrightSmile assistant. I can answer questions about prices, hours and insurance, or book you in.",'bot');
+ const c=document.createElement('div');c.className='chips';['Opening hours?','How much is a check-up?','Do you take insurance?','I have a toothache'].forEach(q=>{const b=document.createElement('button');b.textContent=q;b.onclick=()=>ask(q);c.appendChild(b)});log.appendChild(c);}
+function localAnswer(msg){const w=new Set((msg.toLowerCase().match(/[a-z\-]+/g)||[]));let best=null,s=0;
+ for(const f of FAQ.faqs){const n=f.keywords.filter(k=>w.has(k)).length;if(n>s){s=n;best=f}}
+ if(!best)return{answer:"I'm not 100% sure about that one, so I don't want to guess. Leave your name, email and phone and a team member will get back to you.",handoff:true,mode:'static'};
+ return{answer:best.a,handoff:false,lead_prompt:/book|appointment|pain|emergency|price|cost|much|toothache/.test(msg.toLowerCase()),mode:'static'};}
+async function ask(msg){add(msg,'me');const typing=add('…','bot');let r;
+ try{const x=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});if(!x.ok)throw 0;r=await x.json();}catch(e){r=localAnswer(msg);}
+ await new Promise(s=>setTimeout(s,350));typing.textContent=r.answer;if((r.handoff||r.lead_prompt)&&!leadShown)leadForm();}
+function send(e){e.preventDefault();const i=document.getElementById('cw-in');if(i.value.trim()){ask(i.value.trim());i.value='';}}
+function leadForm(){leadShown=true;const f=document.createElement('form');f.className='lead';
+ f.innerHTML='<b style="font-size:13px">Want the front desk to contact you?</b><input name="name" placeholder="Full name" required><input name="email" type="email" placeholder="Email" required><input name="phone" placeholder="Phone"><button>Send my details</button>';
+ f.onsubmit=async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(f));d.note=[...log.querySelectorAll('.me')].map(x=>x.textContent).join(' | ');let msg;
+  try{const x=await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});msg=(await x.json()).message;}
+  catch(_){const k=JSON.parse(localStorage.leads||'[]');k.push({...d,created_at:new Date().toISOString()});localStorage.leads=JSON.stringify(k);msg='Thanks! (Static demo: lead saved in your browser.)';}
+  f.replaceWith(Object.assign(document.createElement('div'),{className:'m bot',textContent:'✅ '+msg}));};
+ log.appendChild(f);log.scrollTop=1e9;}
+</script></body></html>

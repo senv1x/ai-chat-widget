@@ -1,0 +1,13 @@
+{
+  "business": "BrightSmile Dental (fictional demo clinic)",
+  "faqs": [
+    {"q": "What are your opening hours?", "keywords": ["hours","open","opening","close","closing","saturday","sunday","weekend","time"], "a": "We're open Monday–Friday 8:00–19:00 and Saturday 9:00–14:00. We're closed on Sundays."},
+    {"q": "Where are you located?", "keywords": ["where","address","location","located","parking","directions"], "a": "We're at 12 Harbor Street, Springfield (demo address). Free parking is available behind the building."},
+    {"q": "How much is a check-up?", "keywords": ["price","cost","much","check-up","checkup","exam","fee","pricing"], "a": "A check-up with X-rays is $89. Professional cleaning is $110, or $169 when booked together with a check-up."},
+    {"q": "Do you offer teeth whitening?", "keywords": ["whitening","white","bleach","whiten"], "a": "Yes. In-office whitening is $349 (about 75 minutes). Take-home whitening trays are $199."},
+    {"q": "Do you accept insurance?", "keywords": ["insurance","insured","delta","coverage","covered","plan"], "a": "We accept most major PPO dental plans. Send us your insurer's name and we'll confirm your coverage before your visit."},
+    {"q": "Do you handle emergencies?", "keywords": ["emergency","pain","broken","urgent","toothache","swelling","chipped"], "a": "Yes. We keep same-day slots for dental emergencies. If you're in pain, leave your phone number and our team will call you back within 30 minutes during opening hours."},
+    {"q": "Do you treat children?", "keywords": ["child","children","kid","kids","son","daughter","pediatric"], "a": "Yes, we see patients from age 3. A first visit for kids is free when a parent books a check-up."},
+    {"q": "How do I book an appointment?", "keywords": ["book","appointment","schedule","booking","reserve","visit"], "a": "I can take your details right here. Share your name, email and phone, and the front desk will confirm a time with you."}
+  ]
+}
