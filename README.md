@@ -1,6 +1,6 @@
-# AI Website Assistant + Lead Capture (demo)
+# AI Website Assistant + Lead Capture
 
-> **Demo project** for a fictional business ("BrightSmile Dental"). Built by Viktor / Shipfast Labs to show the $500, 3-day *Website AI Assistant* package. No real client, no real data.
+> **Sample project** for a fictional business ("BrightSmile Dental"). Built by Viktor / Shipfast Labs to show the $500, 3-day *Website AI Assistant* package. No real client, no real data.
 
 ![Chat answering from the FAQ](screenshots/02-chat-answers.png)
 
